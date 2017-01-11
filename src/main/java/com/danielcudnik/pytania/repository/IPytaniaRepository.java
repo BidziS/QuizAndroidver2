@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public interface IPytaniaRepository extends JpaRepository<PytaniaOB,Long> {
     @Query("SELECT u FROM PytaniaOB u WHERE u.kategorie.id=?1")
-    List<PytaniaOB> znajdzPunktyPoKategorii(Long aIdKategoria);
+    List<PytaniaOB> znajdzPytaniaPoKategorii(Long aIdKategoria);
     @Query("SELECT u FROM PytaniaOB u WHERE u.kategorie.nazwa =?1")
     List<PytaniaOB> znajdzPoNazwieKategorii(String aNick);
 }

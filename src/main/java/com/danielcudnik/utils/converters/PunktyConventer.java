@@ -4,6 +4,7 @@ package com.danielcudnik.utils.converters;
 
 
 import com.danielcudnik.punkty.dto.PunktyDTO;
+import com.danielcudnik.punkty.dto.PunktyZapiszDTO;
 import com.danielcudnik.punkty.ob.PunktyOB;
 
 import java.util.ArrayList;
@@ -26,6 +27,11 @@ public class PunktyConventer {
         pPunktyOB.setPunkty(aPunktyDTO.getPunkty());
         pPunktyOB.setUzytkownicy(UzytkownikConverter.uzytDTOdoUzytkOB(aPunktyDTO.getUzytkownicy()));
         return pPunktyOB;
+    }
+
+    public static PunktyZapiszDTO punktyOBdoPunktyZapiszDTO(PunktyOB aPunktyOB){
+        if(aPunktyOB == null) return null;
+        return new PunktyZapiszDTO(aPunktyOB.getId(),aPunktyOB.getTechDate(),aPunktyOB.getPunkty(),TrybConventer.trybOBdotrybDTO(aPunktyOB.getTryb()).getId(),UzytkownikConverter.uzytOBdoUzytkDTO(aPunktyOB.getUzytkownicy()).getId());
     }
 
     public static List<PunktyDTO> listPunktyOBdoPunktyDTO(List<PunktyOB> aListaTrybowOB)

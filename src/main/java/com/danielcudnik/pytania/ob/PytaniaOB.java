@@ -21,6 +21,8 @@ public class PytaniaOB extends BaseOB {
     @NotNull
     private KategorieOB kategorie;
 
+
+
     public PytaniaOB(){
 
     }

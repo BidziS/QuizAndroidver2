@@ -2,6 +2,7 @@ package com.danielcudnik.punkty.api;
 
 
 import com.danielcudnik.punkty.dto.PunktyDTO;
+import com.danielcudnik.punkty.dto.PunktyZapiszDTO;
 import com.danielcudnik.punkty.service.IPunktyService;
 import com.danielcudnik.utils.MyServerException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +33,31 @@ public class PunktyController {
     public ResponseEntity<List<PunktyDTO>> znajdzPunktyPoTrybie(@PathVariable("tryb.id") Long aIdTrybu) {
         return new ResponseEntity<>(serwisPunkty.znajdzPunktyPoTrybie(aIdTrybu), HttpStatus.OK);
     }
+    @RequestMapping(value = "pobierzPoTrybie2/{tryb.id}", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<List<PunktyZapiszDTO>> znajdzPunktyPoTrybie2(@PathVariable("tryb.id") Long aIdTrybu) {
+        return new ResponseEntity<>(serwisPunkty.znajdzPunktyPoTrybie2(aIdTrybu), HttpStatus.OK);
+    }
+    @RequestMapping(value="/pobierzPoUrzytkownikuITrybie/{tryb},{uzytkownik}",method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<List<PunktyDTO>> findUsersByNameAndSurname(@PathVariable("tryb") Long aNick, @PathVariable("uzytkownik") Long aTryb){
+        return new ResponseEntity<>(serwisPunkty.znajdzPunktyPoUzytkownikuITrybie(aNick,aTryb),HttpStatus.OK);
+    }
 
     @RequestMapping(value = "/zapiszPunkty",method = RequestMethod.POST,consumes = "application/json",produces = "application/json")
     @ResponseBody
     public ResponseEntity<PunktyDTO> zapiszPunkty(@RequestBody PunktyDTO aPunktyDTO){
         try {
             return new ResponseEntity<>(serwisPunkty.zapiszPunkty(aPunktyDTO), HttpStatus.OK);
+        }catch (MyServerException e) {
+            return new ResponseEntity<>(e.getHeaders(),e.getStatus());
+        }
+    }
+    @RequestMapping(value = "/zapiszPunkty2",method = RequestMethod.POST,consumes = "application/json",produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<PunktyDTO> zapiszPunkty2(@RequestBody PunktyZapiszDTO aPunktyDTO){
+        try {
+            return new ResponseEntity<>(serwisPunkty.zapiszPunkty2(aPunktyDTO), HttpStatus.OK);
         }catch (MyServerException e) {
             return new ResponseEntity<>(e.getHeaders(),e.getStatus());
         }

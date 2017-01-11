@@ -1,33 +1,21 @@
 package com.danielcudnik.odpowiedzi.dto;
 
-
-
 import com.danielcudnik.base.DTO.BaseDTO;
 import com.danielcudnik.odpowiedzi.EPoprawna;
-import com.danielcudnik.pytania.dto.PytaniaDTO;
-
-import java.util.Date;
 
 /**
- * Created by Bidzis on 11/12/2016.
+ * Created by Bidzis on 1/10/2017.
  */
-public class OdpowiedziDTO extends BaseDTO {
+public class OdpowiedziZapiszDTO extends BaseDTO{
     private String odpowiedz;
     private boolean poprawna;
-    private PytaniaDTO pytania;
+    private Long pytania;
 
-    public OdpowiedziDTO(){
+    public OdpowiedziZapiszDTO(){
 
     }
 
-    public OdpowiedziDTO(String odpowiedz, boolean poprawna, PytaniaDTO pytania) {
-        this.odpowiedz = odpowiedz;
-        this.poprawna = poprawna;
-        this.pytania = pytania;
-    }
-
-    public OdpowiedziDTO(Long id, Date techDate, String odpowiedz, boolean poprawna, PytaniaDTO pytania){
-        super(id, techDate);
+    public OdpowiedziZapiszDTO(String odpowiedz, boolean poprawna, Long pytania) {
         this.odpowiedz = odpowiedz;
         this.poprawna = poprawna;
         this.pytania = pytania;
@@ -49,11 +37,11 @@ public class OdpowiedziDTO extends BaseDTO {
         this.poprawna = poprawna;
     }
 
-    public PytaniaDTO getPytania() {
+    public Long getPytania() {
         return pytania;
     }
 
-    public void setPytania(PytaniaDTO pytania) {
+    public void setPytania(Long pytania) {
         this.pytania = pytania;
     }
 }

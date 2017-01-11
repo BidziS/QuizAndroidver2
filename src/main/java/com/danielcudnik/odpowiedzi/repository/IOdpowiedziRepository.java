@@ -17,5 +17,5 @@ public interface IOdpowiedziRepository extends JpaRepository<OdpowiedziOB,Long> 
     @Query("SELECT u FROM OdpowiedziOB u WHERE u.pytania.id=?1")
     List<OdpowiedziOB> znajdzPunktyPoPytaniu(Long aIdPytania);
     @Query("SELECT u FROM OdpowiedziOB u WHERE u.poprawna=?1")
-    List<OdpowiedziOB> znajdzPoAktywnosci(EPoprawna aPoprawna);
+    List<OdpowiedziOB> znajdzPoAktywnosci(boolean aPoprawna);
 }

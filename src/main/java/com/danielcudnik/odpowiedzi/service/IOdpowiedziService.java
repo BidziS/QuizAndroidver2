@@ -4,6 +4,7 @@ package com.danielcudnik.odpowiedzi.service;
 
 import com.danielcudnik.odpowiedzi.EPoprawna;
 import com.danielcudnik.odpowiedzi.dto.OdpowiedziDTO;
+import com.danielcudnik.odpowiedzi.dto.OdpowiedziZapiszDTO;
 import com.danielcudnik.utils.MyServerException;
 
 import java.util.List;
@@ -13,7 +14,9 @@ import java.util.List;
  */
 public interface IOdpowiedziService {
     List<OdpowiedziDTO> znajdzOdpowiedziPoPytaniu(Long aIdPytania);
-    List<OdpowiedziDTO> znajdzOdpowiedziPoPoprawnosci(EPoprawna poprawna);
+    List<OdpowiedziDTO> znajdzOdpowiedziPoPoprawnosci(boolean poprawna);
     OdpowiedziDTO zapiszOdpowiedz(OdpowiedziDTO aOdpowiedziDTO) throws MyServerException;
+    OdpowiedziDTO zapiszOdpowiedz2(OdpowiedziZapiszDTO aOdpowiedziDTO) throws MyServerException;
+    OdpowiedziDTO edytujOdpowiedz(OdpowiedziZapiszDTO aOdpowiedziZapiszDTO) throws MyServerException;
     void usunOdpowiedzi(Long aId);
 }

@@ -2,6 +2,7 @@ package com.danielcudnik;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
@@ -15,6 +16,7 @@ import static com.google.common.base.Predicates.or;
 /**
  * Created by Bidzis on 11/3/2016.
  */
+//@EnableWebMvc
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {

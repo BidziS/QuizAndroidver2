@@ -1,9 +1,12 @@
 package com.danielcudnik.uzytkownik.service.impl;
 
 
+import com.danielcudnik.punkty.ob.PunktyOB;
+import com.danielcudnik.punkty.repository.IPunktyRepository;
 import com.danielcudnik.utils.MyServerException;
 import com.danielcudnik.utils.converters.UzytkownikConverter;
 import com.danielcudnik.uzytkownik.dto.UzytkownikDTO;
+import com.danielcudnik.uzytkownik.dto.UzytkownikLogowanieDTO;
 import com.danielcudnik.uzytkownik.ob.UzytkownikOB;
 import com.danielcudnik.uzytkownik.repository.IUzytkownikRepository;
 import com.danielcudnik.uzytkownik.service.IUzytkownikService;
@@ -28,6 +31,10 @@ public class UzytkownikService implements IUzytkownikService {
 
     @Autowired
     IUzytkownikRepository iUzytkownikRepository;
+
+    @Autowired
+    IPunktyRepository iPunktyRepository;
+
     @Override
     public UzytkownikDTO znajdzUzytkownikaPoId(Long aId) throws MyServerException {
         UzytkownikOB pUzytkownikOB = iUzytkownikRepository.findOne(aId);//znajdź po ID, i zwróc instancje obiektu UzytkownikOB
@@ -69,8 +76,6 @@ public class UzytkownikService implements IUzytkownikService {
 
             //tworzenia pięciu standardowych dzienników planów
 
-
-
             return aUzytkownikDTO;
         }
         //edytuj istniejącego
@@ -79,5 +84,25 @@ public class UzytkownikService implements IUzytkownikService {
 
         return UzytkownikConverter.uzytOBdoUzytkDTO(iUzytkownikRepository.save(pUzytkownikOB));
     }
+    @Override
+    public UzytkownikDTO logowanieUzytkownika(UzytkownikLogowanieDTO aUserDTO) throws MyServerException{
+        UzytkownikOB user = aUserDTO.getNick() == null ? null : iUzytkownikRepository.znajdzPoNicku(aUserDTO.getNick());
+        if(user == null) throw new MyServerException("User not found",HttpStatus.NOT_FOUND, new HttpHeaders());
+        if(aUserDTO.getHaslo() == null) throw new  MyServerException("Password not found",HttpStatus.NOT_FOUND,new HttpHeaders());
+        if(user.getHaslo().hashCode() != aUserDTO.getHaslo().hashCode()) throw new MyServerException("Password dont match",HttpStatus.METHOD_NOT_ALLOWED,new HttpHeaders());
+        return UzytkownikConverter.uzytOBdoUzytkDTO(user);
+    }
+    @Override
+    public void usunUzytkownika(String aNick) throws  MyServerException{
+        UzytkownikOB uzytkownikOB = iUzytkownikRepository.znajdzPoNicku(aNick);
+        if(uzytkownikOB == null) throw new MyServerException("User with this id not exists",HttpStatus.NOT_FOUND,new HttpHeaders());
+        List<PunktyOB> punktyUzytkownika = iPunktyRepository.znajdzPunktyPoUzytkowniku(uzytkownikOB.getId());
+        if (!punktyUzytkownika.isEmpty())
+            for (PunktyOB punkty:punktyUzytkownika) {
+               iPunktyRepository.delete(punkty.getId());
+            }
+        iUzytkownikRepository.delete(uzytkownikOB.getId());
+    }
+
 
 }

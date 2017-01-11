@@ -17,7 +17,7 @@ import javax.validation.constraints.NotNull;
 @SequenceGenerator(allocationSize = 1, name = "SEQ", sequenceName = "GEN_ODPOWIEDZI_ID")
 public class OdpowiedziOB extends BaseOB {
     private String odpowiedz;
-    private EPoprawna poprawna;
+    private boolean poprawna;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PYTANIA_ID", referencedColumnName = "ID")
     @NotNull
@@ -25,7 +25,8 @@ public class OdpowiedziOB extends BaseOB {
 
     public OdpowiedziOB(){}
 
-    public OdpowiedziOB(String odpowiedz, EPoprawna poprawna, PytaniaOB pytania) {
+    public OdpowiedziOB(String odpowiedz, boolean poprawna, PytaniaOB pytania) {
+        super();
         this.odpowiedz = odpowiedz;
         this.poprawna = poprawna;
         this.pytania = pytania;
@@ -39,11 +40,11 @@ public class OdpowiedziOB extends BaseOB {
         this.odpowiedz = odpowiedz;
     }
 
-    public EPoprawna getPoprawna() {
+    public boolean getPoprawna() {
         return poprawna;
     }
 
-    public void setPoprawna(EPoprawna poprawna) {
+    public void setPoprawna(boolean poprawna) {
         this.poprawna = poprawna;
     }
 
