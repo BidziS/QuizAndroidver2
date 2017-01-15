@@ -55,9 +55,18 @@ public class PytaniaController {
     }
     @RequestMapping(value = "usunPoId/{id}", method = RequestMethod.PUT)
     @ResponseBody
-    public ResponseEntity<Void> usunPytanie(@PathVariable("id")Long aId){
+    public ResponseEntity<Void> usunPytanie(@PathVariable("id")Long aId) throws MyServerException {
         serwisPytania.usunPytania(aId);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @RequestMapping(value = "/edytujPytanie",method = RequestMethod.POST,consumes = "application/json",produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<PytaniaDTO> edytujPytanie(@RequestBody PytaniaDTO aPunktyDTO){
+        try {
+            return new ResponseEntity<>(serwisPytania.edytujPytanie(aPunktyDTO), HttpStatus.OK);
+        }catch (MyServerException e) {
+            return new ResponseEntity<>(e.getHeaders(),e.getStatus());
+        }
     }
     @RequestMapping(value = "losujPoKategorii/{kategorie.id}", method = RequestMethod.GET)
     @ResponseBody

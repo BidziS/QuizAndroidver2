@@ -8,6 +8,9 @@ import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.*;
+
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 
@@ -24,9 +27,4 @@ public class Application extends SpringBootServletInitializer implements WebAppl
 		return builder.sources(Application.class);
 	}
 
-
-	@RequestMapping(value = "/")
-	public String demo(){
-		return "Gitara siema";
-	}
 }

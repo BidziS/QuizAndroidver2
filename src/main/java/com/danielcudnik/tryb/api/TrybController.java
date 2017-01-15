@@ -14,6 +14,7 @@ import java.util.List;
 /**
  * Created by Bidzis on 11/10/2016.
  */
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/quizAndroid/tryby")
 public class TrybController {

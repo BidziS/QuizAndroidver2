@@ -15,6 +15,7 @@ import java.util.List;
 /**
  * Created by Bidzis on 11/12/2016.
  */
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/quizAndroid/punkty")
 public class PunktyController {
@@ -38,10 +39,10 @@ public class PunktyController {
     public ResponseEntity<List<PunktyZapiszDTO>> znajdzPunktyPoTrybie2(@PathVariable("tryb.id") Long aIdTrybu) {
         return new ResponseEntity<>(serwisPunkty.znajdzPunktyPoTrybie2(aIdTrybu), HttpStatus.OK);
     }
-    @RequestMapping(value="/pobierzPoUrzytkownikuITrybie/{tryb},{uzytkownik}",method = RequestMethod.GET)
+    @RequestMapping(value="/pobierzPoUzytkownikuITrybie/{tryb},{uzytkownik}",method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<List<PunktyDTO>> findUsersByNameAndSurname(@PathVariable("tryb") Long aNick, @PathVariable("uzytkownik") Long aTryb){
-        return new ResponseEntity<>(serwisPunkty.znajdzPunktyPoUzytkownikuITrybie(aNick,aTryb),HttpStatus.OK);
+    public ResponseEntity<List<PunktyDTO>> findUsersByNameAndSurname(@PathVariable("tryb") Long aTryb, @PathVariable("uzytkownik") Long aNick){
+        return new ResponseEntity<>(serwisPunkty.znajdzPunktyPoUzytkownikuITrybie(aTryb,aNick),HttpStatus.OK);
     }
 
     @RequestMapping(value = "/zapiszPunkty",method = RequestMethod.POST,consumes = "application/json",produces = "application/json")

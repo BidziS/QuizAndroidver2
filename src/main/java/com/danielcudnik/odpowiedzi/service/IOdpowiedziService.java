@@ -17,6 +17,6 @@ public interface IOdpowiedziService {
     List<OdpowiedziDTO> znajdzOdpowiedziPoPoprawnosci(boolean poprawna);
     OdpowiedziDTO zapiszOdpowiedz(OdpowiedziDTO aOdpowiedziDTO) throws MyServerException;
     OdpowiedziDTO zapiszOdpowiedz2(OdpowiedziZapiszDTO aOdpowiedziDTO) throws MyServerException;
-    OdpowiedziDTO edytujOdpowiedz(OdpowiedziZapiszDTO aOdpowiedziZapiszDTO) throws MyServerException;
+    OdpowiedziDTO edytujOdpowiedz(OdpowiedziDTO aOdpowiedziZapiszDTO) throws MyServerException;
     void usunOdpowiedzi(Long aId);
 }

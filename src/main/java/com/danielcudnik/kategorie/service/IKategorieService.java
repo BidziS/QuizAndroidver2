@@ -13,4 +13,5 @@ public interface IKategorieService {
     List<KategorieDTO> znajdzWszystkieKategorie();
     KategorieDTO znajdzKategoriePoNazwie(String aNazwaKategorii) throws  MyServerException;
     KategorieDTO zapiszKategorie(KategorieDTO aKategorieDTO) throws MyServerException ;
+    void usunKategorie(String aNazwaKategorii) throws  MyServerException;
 }

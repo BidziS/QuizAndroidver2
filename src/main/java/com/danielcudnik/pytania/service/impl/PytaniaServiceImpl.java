@@ -4,6 +4,10 @@ package com.danielcudnik.pytania.service.impl;
 import com.danielcudnik.kategorie.dto.KategorieDTO;
 import com.danielcudnik.kategorie.ob.KategorieOB;
 import com.danielcudnik.kategorie.repository.IKategorieRepository;
+import com.danielcudnik.odpowiedzi.ob.OdpowiedziOB;
+import com.danielcudnik.odpowiedzi.repository.IOdpowiedziRepository;
+import com.danielcudnik.punkty.dto.PunktyDTO;
+import com.danielcudnik.punkty.ob.PunktyOB;
 import com.danielcudnik.pytania.dto.PytaniaDTO;
 import com.danielcudnik.pytania.dto.PytaniaZapiszDTO;
 import com.danielcudnik.pytania.ob.PytaniaOB;
@@ -22,6 +26,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import static org.apache.coyote.http11.Constants.a;
+
 /**
  * Created by Bidzis on 11/12/2016.
  */
@@ -35,6 +41,9 @@ public class PytaniaServiceImpl implements IPytaniaService {
     @Autowired
     IKategorieRepository iKategorieRepository;
 
+    @Autowired
+    IOdpowiedziRepository iOdpowiedziRepository;
+
     @Override
     public List<PytaniaDTO> znajdzPytaniaPoKategorii(Long aIdTryb){
         List<PytaniaDTO> listaWynikowaPytaniaDTO = new ArrayList<>();
@@ -42,6 +51,7 @@ public class PytaniaServiceImpl implements IPytaniaService {
         for(PytaniaOB punktyOB : listaPytaniaOB)
             listaWynikowaPytaniaDTO.add(PytaniaConventer.pytaniaOBdoPytaniaDTO(punktyOB));
         //Collections.sort(listaWynikowaPunktyDTO, (PunktyDTO a, PunktyDTO b) -> b.getPunkty().compareTo(a.getPunkty()));
+        Collections.sort(listaWynikowaPytaniaDTO, (PytaniaDTO a, PytaniaDTO b) -> a.getId().compareTo(b.getId()));
         return listaWynikowaPytaniaDTO;
     }
     @Override
@@ -51,6 +61,7 @@ public class PytaniaServiceImpl implements IPytaniaService {
         for(PytaniaOB punktyOB : listaPytaniaOB)
             listaWynikowaPytaniaDTO.add(PytaniaConventer.pytaniaOBdoPytaniaDTO(punktyOB));
         //Collections.sort(listaWynikowaPunktyDTO, (PunktyDTO a, PunktyDTO b) -> b.getPunkty().compareTo(a.getPunkty()));
+        Collections.sort(listaWynikowaPytaniaDTO, (PytaniaDTO a, PytaniaDTO b) -> a.getId().compareTo(b.getId()));
         return listaWynikowaPytaniaDTO;
     }
     @Override
@@ -84,8 +95,23 @@ public class PytaniaServiceImpl implements IPytaniaService {
 
     }
     @Override
-    public void usunPytania(Long aId){
+    public void usunPytania(Long aId) throws MyServerException{
+        PytaniaOB pytaniaOB = iPytaniaRepository.findOne(aId);
+        if(pytaniaOB == null) throw new MyServerException("Nie znaleziono pytania",HttpStatus.NOT_FOUND,new HttpHeaders());
+        List<OdpowiedziOB>odpowiedziOBList = iOdpowiedziRepository.znajdzPunktyPoPytaniu(aId);
+        if (!odpowiedziOBList.isEmpty())
+            for (OdpowiedziOB odpowiedz:odpowiedziOBList) {
+                iOdpowiedziRepository.delete(odpowiedz.getId());
+            }
         iPytaniaRepository.delete(aId);
+    }
+    @Override
+    public PytaniaDTO edytujPytanie(PytaniaDTO aPytaniaDTO) throws MyServerException{
+        PytaniaOB pytaniaOB = iPytaniaRepository.findOne(aPytaniaDTO.getId());
+        if (pytaniaOB == null) throw new MyServerException("Nie znaleziono pytania",HttpStatus.NOT_FOUND,new HttpHeaders());
+        pytaniaOB.setPytanie(aPytaniaDTO.getPytanie());
+        return PytaniaConventer.pytaniaOBdoPytaniaDTO(iPytaniaRepository.save(pytaniaOB));
+
     }
     @Override
     public List<PytaniaDTO> losujPytaniaPoKategorii(Long aIdTryb){
@@ -95,7 +121,6 @@ public class PytaniaServiceImpl implements IPytaniaService {
             listaWynikowaPytaniaDTO.add(PytaniaConventer.pytaniaOBdoPytaniaDTO(punktyOB));
         long seed = System.nanoTime();
         Collections.shuffle(listaWynikowaPytaniaDTO,new Random(seed));
-        //Collections.sort(listaWynikowaPunktyDTO, (PunktyDTO a, PunktyDTO b) -> b.getPunkty().compareTo(a.getPunkty()));
         return listaWynikowaPytaniaDTO;
     }
 }

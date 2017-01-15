@@ -20,7 +20,6 @@ import java.util.List;
  * Created by Bidzis on 11/3/2016.
  */
 @CrossOrigin
-@SpringBootApplication
 @RestController
 @RequestMapping(value = "/quizAndroid/uzytkownicy")
 public class UzytkownikController extends SpringBootServletInitializer implements WebApplicationInitializer{

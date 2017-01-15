@@ -52,8 +52,8 @@ public class PunktyServiceImpl implements IPunktyService {
         return listaWynikowaPunktyDTO;
     }
     @Override
-    public List<PunktyDTO> znajdzPunktyPoUzytkownikuITrybie(Long aNick, Long aTryb) {
-        List<PunktyOB> punkty = iPunktyRepository.znajdzPunktyPoUzytkownikuITrybie(aNick,aTryb);
+    public List<PunktyDTO> znajdzPunktyPoUzytkownikuITrybie(Long aTryb, Long aNick) {
+        List<PunktyOB> punkty = iPunktyRepository.znajdzPunktyPoTrybieIUzytkowniku(aTryb,aNick);
         List<PunktyDTO> listaWynikowaPunktyDTO = PunktyConventer.listPunktyOBdoPunktyDTO(punkty);
         Collections.sort(listaWynikowaPunktyDTO, (PunktyDTO a, PunktyDTO b) -> b.getPunkty().compareTo(a.getPunkty()));//musiałem podnieść do java 1.8
         return listaWynikowaPunktyDTO;

@@ -26,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -52,6 +53,7 @@ public class OdpowiedziServiceImpl implements IOdpowiedziService {
         for(OdpowiedziOB odpowiedziOB : listaOdpowiedziOB)
             listaWynikowaOdpowiedziDTO.add(OdpowiedziConventer.odpowiedziOBdoOdpowiedziDTO(odpowiedziOB));
         //Collections.sort(listaWynikowaPunktyDTO, (PunktyDTO a, PunktyDTO b) -> b.getPunkty().compareTo(a.getPunkty()));
+        Collections.sort(listaWynikowaOdpowiedziDTO,(OdpowiedziDTO a, OdpowiedziDTO b) -> a.getId().compareTo(b.getId()));
         return listaWynikowaOdpowiedziDTO;
     }
     @Override
@@ -108,7 +110,7 @@ public class OdpowiedziServiceImpl implements IOdpowiedziService {
         return OdpowiedziConventer.odpowiedziOBdoOdpowiedziDTO(iOdpowiedziRepository.save(odpowiedziOB));
     }
     @Override
-    public OdpowiedziDTO edytujOdpowiedz(OdpowiedziZapiszDTO aOdpowiedziZapiszDTO) throws MyServerException{
+    public OdpowiedziDTO edytujOdpowiedz(OdpowiedziDTO aOdpowiedziZapiszDTO) throws MyServerException{
         OdpowiedziOB odpowiedziOB = iOdpowiedziRepository.findOne(aOdpowiedziZapiszDTO.getId());
         if (odpowiedziOB == null) throw new MyServerException("Nie znaleziono odpowiedzi",HttpStatus.NOT_FOUND,new HttpHeaders());
         odpowiedziOB.setOdpowiedz(aOdpowiedziZapiszDTO.getOdpowiedz());

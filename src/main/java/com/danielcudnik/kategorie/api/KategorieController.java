@@ -54,4 +54,15 @@ public class KategorieController {
             return new ResponseEntity<>(e.getHeaders(),e.getStatus());
         }
     }
+    @RequestMapping(value="/usunPoNazwie/{nazwa}",method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<KategorieDTO> usunKategorie(@PathVariable("nazwa") String aNazwa){
+        try {
+            serwisKategorie.usunKategorie(aNazwa);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch (MyServerException e){
+            return new ResponseEntity<>(e.getHeaders(),e.getStatus());
+        }
+
+    }
 }

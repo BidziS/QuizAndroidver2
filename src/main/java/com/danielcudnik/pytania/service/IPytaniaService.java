@@ -15,7 +15,8 @@ public interface IPytaniaService {
     List<PytaniaDTO> znajdzPytaniaPoNazwieKategorii(String nazwaKategorii);
     PytaniaDTO zapiszPytania(PytaniaDTO aPytaniaDTO) throws MyServerException;
     PytaniaDTO zapiszPytania2(PytaniaZapiszDTO aPytaniaDTO) throws MyServerException;
-    void usunPytania(Long aId);
+    void usunPytania(Long aId) throws MyServerException;
     List<PytaniaDTO> losujPytaniaPoKategorii(Long aIdTryb);
+    PytaniaDTO edytujPytanie(PytaniaDTO aPytaniaDTO) throws MyServerException;
 //    PytaniaDTO zmienPytanie(PytaniaDTO aPytaniaDTO) throws MyServerException;
 }

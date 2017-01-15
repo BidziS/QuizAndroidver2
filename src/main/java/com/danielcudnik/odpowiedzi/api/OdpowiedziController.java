@@ -56,9 +56,9 @@ public class OdpowiedziController {
     }
     @RequestMapping(value = "/edytujOdpowiedz",method = RequestMethod.POST,consumes = "application/json",produces = "application/json")
     @ResponseBody
-    public ResponseEntity<OdpowiedziDTO> edytytujOdpowiedz(@RequestBody OdpowiedziZapiszDTO aOdpowiedziDTO){
+    public ResponseEntity<OdpowiedziDTO> edytytujOdpowiedz(@RequestBody OdpowiedziDTO aOdpowiedziDTO){
         try {
-            return new ResponseEntity<>(serwisOdpowiedzi.zapiszOdpowiedz2(aOdpowiedziDTO), HttpStatus.OK);
+            return new ResponseEntity<>(serwisOdpowiedzi.edytujOdpowiedz(aOdpowiedziDTO), HttpStatus.OK);
         }catch (MyServerException e) {
             return new ResponseEntity<>(e.getHeaders(),e.getStatus());
         }

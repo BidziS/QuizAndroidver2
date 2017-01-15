@@ -19,5 +19,5 @@ public interface IPunktyRepository extends JpaRepository<PunktyOB,Long> {
     List<PunktyOB> znajdzPunktyPoTrybie(Long aIdTryb);
 
     @Query("SELECT u FROM PunktyOB u WHERE u.tryb.id = ?1 AND u.uzytkownicy.id = ?2")
-    List<PunktyOB> znajdzPunktyPoUzytkownikuITrybie (Long aName, Long aSurname);
+    List<PunktyOB> znajdzPunktyPoTrybieIUzytkowniku(Long aTryb, Long aNick);
 }
